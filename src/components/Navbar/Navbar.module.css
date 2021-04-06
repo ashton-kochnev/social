@@ -2,8 +2,16 @@
     grid-area: nav;
     background-color: green;
 }
-  
-.nav ul {
+
+ul {
     list-style-type: none;
 }
-  
+
+a {
+    text-decoration: none;
+}
+
+ul a.active {
+    color: gold;
+    text-decoration: none;
+}
