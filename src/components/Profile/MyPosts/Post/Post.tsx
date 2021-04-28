@@ -1,6 +1,7 @@
 import React from 'react';
+import {PostType} from "../../../../Redux/state";
 
-const Post = (props) => {
+const Post: React.FC<PostType> = (props) => {
     return (
         <div>
             <div>{props.message}</div>

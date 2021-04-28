@@ -10,9 +10,10 @@ import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
 import {RootStateType} from "./Redux/state";
 
-type AppType = {
+export type AppType = {
     state: RootStateType
     addPost: (message: string) => void
+    updateNewPostText: (message: string) => void
 }
 
 const App: React.FC<AppType> = (props) => {
@@ -22,7 +23,11 @@ const App: React.FC<AppType> = (props) => {
             <Navbar state={props.state.friendsPage}/>
             <div className='app-wrapper-content'>
                 <Route path='/profile'
-                       render={() => <Profile state={props.state.profilePage} addPost={props.addPost}/>}/>
+                       render={() => <Profile
+                           profilePage={props.state.profilePage}
+                           addPost={props.addPost}
+                           updateNewPostText={props.updateNewPostText}
+                       />}/>
                 <Route path='/dialogs'
                        render={() => <Dialogs state={props.state.messagesPage}/>}/>
                 <Route path='/music' render={() => <Music/>}/>

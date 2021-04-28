@@ -1,37 +1,38 @@
 import {rerenderEntireTree} from "../render";
 
-type MessageType = {
+export type MessageType = {
     id: number
     message: string
 }
 
-type DialogType = {
+export type DialogType = {
     id: number
     name: string
 }
 
-type PostType = {
+export type PostType = {
     id: number
     message: string
     likesCount: number
 }
 
-type ProfilePageType = {
+export type ProfilePageType = {
     posts: Array<PostType>
+    newPostText: string
 }
 
-type DialogPageType = {
+export type DialogPageType = {
     dialogsData: Array<DialogType>
     messages: Array<MessageType>
 }
 
-type SidebarType = {
+export type SidebarType = {
     id: number
     link: string
     name: string
 }
 
-type FriendsPageType = {
+export type FriendsPageType = {
     friends: Array<SidebarType>
 }
 
@@ -41,12 +42,13 @@ export type RootStateType = {
     friendsPage: FriendsPageType
 }
 
-const state: RootStateType= {
+const state: RootStateType = {
     profilePage: {
         posts: [
             {id: 1, message: "what's up, man", likesCount: 3},
             {id: 2, message: "how are you", likesCount: 7}
-        ]
+        ],
+        newPostText: ''
     },
     messagesPage: {
         dialogsData: [
@@ -91,6 +93,11 @@ export const addPost = (postMessage: string) => {
     }
 
     state.profilePage.posts.push(newPost)
+    rerenderEntireTree(state)
+}
+
+export const updateNewPostText = (newText: string) => {
+    state.profilePage.newPostText = newText
     rerenderEntireTree(state)
 }
 
