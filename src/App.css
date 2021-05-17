@@ -1,7 +1,8 @@
 .wrapper {
   display: grid;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 10px auto 0;
+  color: #98ffb0;
   grid-template-areas: 
     'header header'
     'nav cont';
@@ -13,5 +14,6 @@
 
 .app-wrapper-content {
   grid-area: cont;
-  background-color: lightseagreen;
+  background-color: #008bf5;
+  border-radius: 5px;
 }

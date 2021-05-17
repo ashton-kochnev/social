@@ -14,6 +14,8 @@ export type AppType = {
     state: RootStateType
     addPost: (message: string) => void
     updateNewPostText: (message: string) => void
+    addMessage: (message: string) => void
+    updateNewMessage: (message: string) => void
 }
 
 const App: React.FC<AppType> = (props) => {
@@ -29,7 +31,11 @@ const App: React.FC<AppType> = (props) => {
                            updateNewPostText={props.updateNewPostText}
                        />}/>
                 <Route path='/dialogs'
-                       render={() => <Dialogs state={props.state.messagesPage}/>}/>
+                       render={() => <Dialogs
+                           messagesPage={props.state.messagesPage}
+                           addMessage={props.addMessage}
+                           updateNewMessage={props.updateNewMessage}
+                       />}/>
                 <Route path='/music' render={() => <Music/>}/>
                 <Route path='/news' render={() => <News/>}/>
                 <Route path='/settings' render={() => <Settings/>}/>

@@ -3,7 +3,6 @@ import classes from './Friends.module.css';
 import Friend from "./Friend/Friend";
 import {SidebarType} from "../../Redux/state";
 
-
 type FriendsType = {
     state: Array<SidebarType>
 }

@@ -1,6 +1,7 @@
 .nav {
     grid-area: nav;
-    background-color: green;
+    background-color: #008bf5;
+    border-radius: 5px;
 }
 
 ul {
@@ -9,6 +10,7 @@ ul {
 
 a {
     text-decoration: none;
+    color: #98ffb0;
 }
 
 ul a.active {
