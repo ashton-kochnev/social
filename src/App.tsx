@@ -8,10 +8,10 @@ import {Route} from 'react-router-dom';
 import Music from "./components/Music/Music";
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
-import {RootStateType} from "./Redux/state";
+import {StoreType} from "./Redux/state";
 
 export type AppType = {
-    state: RootStateType
+    store: StoreType
     addPost: (message: string) => void
     updateNewPostText: (message: string) => void
     addMessage: (message: string) => void
@@ -19,22 +19,24 @@ export type AppType = {
 }
 
 const App: React.FC<AppType> = (props) => {
+    const state = props.store.getState()
+
     return (
         <div className='wrapper'>
             <Header/>
-            <Navbar state={props.state.friendsPage}/>
+            <Navbar state={state.friendsPage}/>
             <div className='app-wrapper-content'>
                 <Route path='/profile'
                        render={() => <Profile
-                           profilePage={props.state.profilePage}
-                           addPost={props.addPost}
-                           updateNewPostText={props.updateNewPostText}
+                           profilePage={state.profilePage}
+                           addPost={props.addPost.bind(props.store)}
+                           updateNewPostText={props.updateNewPostText.bind(props.store)}
                        />}/>
                 <Route path='/dialogs'
                        render={() => <Dialogs
-                           messagesPage={props.state.messagesPage}
-                           addMessage={props.addMessage}
-                           updateNewMessage={props.updateNewMessage}
+                           messagesPage={state.messagesPage}
+                           addMessage={props.addMessage.bind(props.store)}
+                           updateNewMessage={props.updateNewMessage.bind(props.store)}
                        />}/>
                 <Route path='/music' render={() => <Music/>}/>
                 <Route path='/news' render={() => <News/>}/>

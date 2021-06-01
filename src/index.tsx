@@ -9,7 +9,7 @@ import {BrowserRouter} from "react-router-dom";
 const _callSubscriber = () => {
     ReactDOM.render(
         <BrowserRouter>
-            <App state={store.getState()}
+            <App store={store}
                  addPost={store.addPost.bind(store)}
                  updateNewPostText={store.updateNewPostText.bind(store)}
                  addMessage={store.addMessage.bind(store)}
