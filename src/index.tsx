@@ -1,27 +1,27 @@
 import reportWebVitals from './reportWebVitals';
-import state, {addMessage, addPost, subscribe, updateNewMessage, updateNewPostText} from "./Redux/state";
+import store from "./Redux/state";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import {BrowserRouter} from "react-router-dom";
 
-const rerenderEntireTree = () => {
+const _callSubscriber = () => {
     ReactDOM.render(
         <BrowserRouter>
-            <App state={state}
-                 addPost={addPost}
-                 updateNewPostText={updateNewPostText}
-                 addMessage={addMessage}
-                 updateNewMessage={updateNewMessage}
+            <App state={store.getState()}
+                 addPost={store.addPost.bind(store)}
+                 updateNewPostText={store.updateNewPostText.bind(store)}
+                 addMessage={store.addMessage.bind(store)}
+                 updateNewMessage={store.updateNewMessage.bind(store)}
             />
         </BrowserRouter>,
         document.getElementById('root')
     );
 }
 
-rerenderEntireTree()
+_callSubscriber()
 
-subscribe(rerenderEntireTree)
+store.subscribe(_callSubscriber)
 
 reportWebVitals();
