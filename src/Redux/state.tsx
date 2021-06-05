@@ -1,3 +1,8 @@
+const ADD_POST = 'ADD-POST'
+const UPDATE_NEW_POST = "UPDATE-NEW-POST"
+const ADD_MESSAGE = "ADD-MESSAGE"
+const UPDATE_NEW_MESSAGE = "UPDATE-NEW-MESSAGE"
+
 export type MessageType = {
     id: number
     message: string
@@ -38,7 +43,7 @@ export type FriendsPageType = {
 export type RootStateType = {
     profilePage: ProfilePageType
     messagesPage: DialogPageType
-    friendsPage: FriendsPageType
+    sidebar: FriendsPageType
 }
 
 export type StoreType = {
@@ -46,15 +51,57 @@ export type StoreType = {
     subscribe: (observer: () => void) => void
     getState: () => RootStateType
     _state: RootStateType
-    updateNewMessage: (newText: string) => void
-    addPost: (postMessage: string) => void
-    updateNewPostText: (newText: string) => void
-    addMessage: (message: string) => void
+    // updateNewMessage: (newText: string) => void
+    // addPost: (postMessage: string) => void
+    // updateNewPostText: (newText: string) => void
+    // addMessage: (message: string) => void
+    dispatch: (action: ActionsType) => void
 }
 
-let store: StoreType = {
+export type ActionsType = addPostType | updatePostType | addMessageType | updateMessageType;
 
-    _callSubscriber() {},
+type addPostType = {
+    type: 'ADD-POST'
+    postMessage: string
+}
+
+type updatePostType = {
+    type: 'UPDATE-NEW-POST'
+    newText: string
+}
+type addMessageType = {
+    type: 'ADD-MESSAGE'
+    message: string
+}
+type updateMessageType = {
+    type: 'UPDATE-NEW-MESSAGE'
+    newText: string
+}
+
+export const addPostActionCreate = (postText: string): addPostType => ({
+        type: ADD_POST,
+        postMessage: postText
+})
+
+export const updateNewPostActionCreator = (newText: string): updatePostType => ({
+        type: UPDATE_NEW_POST,
+        newText: newText
+})
+
+export const addMessageActionCreator = (newText: string): addMessageType => ({
+        type: ADD_MESSAGE,
+        message: newText
+})
+
+export const updateNewMessageActionCreator = (newText: string): updateMessageType => ({
+        type: UPDATE_NEW_MESSAGE,
+        newText: newText
+})
+
+const store: StoreType = {
+
+    _callSubscriber() {
+    },
 
     subscribe(observer) {
         this._callSubscriber = observer
@@ -87,7 +134,7 @@ let store: StoreType = {
             ],
             newMessage: ''
         },
-        friendsPage: {
+        sidebar: {
             friends: [
                 {
                     id: 1,
@@ -108,38 +155,33 @@ let store: StoreType = {
         }
     },
 
-    addPost(postMessage: string) {
-        const newPost: PostType = {
-            id: 3,
-            message: postMessage,
-            likesCount: 0
+    dispatch(action) {
+        if (action.type === ADD_POST) {
+            const newPost: PostType = {
+                id: 3,
+                message: action.postMessage,
+                likesCount: 0
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = ''
+            this._callSubscriber()
+        } else if (action.type === UPDATE_NEW_POST) {
+            this._state.profilePage.newPostText = action.newText
+            this._callSubscriber()
+        } else if (action.type === ADD_MESSAGE) {
+            const newMessage: MessageType = {
+                id: 5,
+                message: action.message
+            }
+            this._state.messagesPage.messages.push(newMessage)
+            this._state.messagesPage.newMessage = ''
+            this._callSubscriber()
+        } else if (action.type === UPDATE_NEW_MESSAGE) {
+            this._state.messagesPage.newMessage = action.newText
+            this._callSubscriber()
         }
-
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = ''
-        this._callSubscriber()
     },
 
-    updateNewPostText(newText: string) {
-        this._state.profilePage.newPostText = newText
-        this._callSubscriber()
-    },
-
-    addMessage(message: string) {
-        const newMessage: MessageType = {
-            id: 5,
-            message: message
-        }
-
-        this._state.messagesPage.messages.push(newMessage)
-        this._state.messagesPage.newMessage = ''
-        this._callSubscriber()
-    },
-
-    updateNewMessage(newText: string) {
-        this._state.messagesPage.newMessage = newText
-        this._callSubscriber()
-    }
 }
 
 export default store
