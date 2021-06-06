@@ -7,8 +7,6 @@ type AddPostType = {
     posts: Array<PostType>
     newPostText: string
     dispatch: (action: ActionsType) => void
-    // addPost: (message: string) => void
-    // updateNewPostText: (message: string) => void
 }
 
 

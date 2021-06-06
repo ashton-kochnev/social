@@ -51,52 +51,35 @@ export type StoreType = {
     subscribe: (observer: () => void) => void
     getState: () => RootStateType
     _state: RootStateType
-    // updateNewMessage: (newText: string) => void
-    // addPost: (postMessage: string) => void
-    // updateNewPostText: (newText: string) => void
-    // addMessage: (message: string) => void
     dispatch: (action: ActionsType) => void
 }
 
 export type ActionsType = addPostType | updatePostType | addMessageType | updateMessageType;
 
-type addPostType = {
-    type: 'ADD-POST'
-    postMessage: string
-}
+type addPostType = ReturnType<typeof addPostActionCreate>
+type updatePostType = ReturnType<typeof updateNewPostActionCreator>
+type addMessageType = ReturnType<typeof addMessageActionCreator>
+type updateMessageType = ReturnType<typeof updateNewMessageActionCreator>
 
-type updatePostType = {
-    type: 'UPDATE-NEW-POST'
-    newText: string
-}
-type addMessageType = {
-    type: 'ADD-MESSAGE'
-    message: string
-}
-type updateMessageType = {
-    type: 'UPDATE-NEW-MESSAGE'
-    newText: string
-}
+export const addPostActionCreate = (postText: string) => ({
+    type: ADD_POST,
+    postMessage: postText
+})as const
 
-export const addPostActionCreate = (postText: string): addPostType => ({
-        type: ADD_POST,
-        postMessage: postText
-})
+export const updateNewPostActionCreator = (newText: string) => ({
+    type: UPDATE_NEW_POST,
+    newText: newText
+})as const
 
-export const updateNewPostActionCreator = (newText: string): updatePostType => ({
-        type: UPDATE_NEW_POST,
-        newText: newText
-})
+export const addMessageActionCreator = (newText: string) => ({
+    type: ADD_MESSAGE,
+    message: newText
+})as const
 
-export const addMessageActionCreator = (newText: string): addMessageType => ({
-        type: ADD_MESSAGE,
-        message: newText
-})
-
-export const updateNewMessageActionCreator = (newText: string): updateMessageType => ({
-        type: UPDATE_NEW_MESSAGE,
-        newText: newText
-})
+export const updateNewMessageActionCreator = (newText: string) => ({
+    type: UPDATE_NEW_MESSAGE,
+    newText: newText
+})as const
 
 const store: StoreType = {
 
